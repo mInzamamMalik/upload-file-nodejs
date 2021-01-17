@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+
+
+    <!-- from multer repo example - working good -->
+    <!-- <form action="http://localhost:3000/upload" method="post" enctype="multipart/form-data">
+        <input type="file" name="avatar" />
+        <button>Submit</button>
+    </form> -->
+
+
+
+    <input type="file" id="fileInput">
+
+    <button onclick="upload()">Upload</button>
+
+
+    <script>
+        function upload() {
+
+
+            let formData = new FormData();
+
+            var fileInput = document.getElementById("fileInput");
+
+            console.log("fileInput: ", fileInput);
+            console.log("fileInput: ", fileInput.files[0]);
+
+            formData.append("file", fileInput.files[0]); // for browser only, use fs for nodejs client
+
+            axios({
+                method: 'post',
+                url: "http://localhost:3000/upload",
+                data: formData,
+                headers: { 'Content-Type': 'multipart/form-data' }
+            })
+                .then(res => {
+                    console.log(`upload Success` + res.data);
+                })
+                .catch(err => {
+                    console.log(err);
+                })
+
+
+        }
+    </script>
+</body>
+
+</html>
