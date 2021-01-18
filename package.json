@@ -11,9 +11,9 @@
   "license": "ISC",
   "dependencies": {
     "axios": "^0.21.1",
-    "bent": "^7.3.12",
     "cors": "^2.8.5",
     "express": "^4.17.1",
+    "form-data": "^3.0.0",
     "morgan": "^1.10.0",
     "multer": "^1.4.2"
   }
