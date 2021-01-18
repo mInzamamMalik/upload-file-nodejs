@@ -22,13 +22,12 @@
 
 
     <!--CASE 2:  incase you want make request using javacript, its my favourite because it gives me not just just html5 validation on form but I can also apply some javascript conditions before submiting form-->
-    <!-- <form onsubmit="return upload()"> -->
-    <!-- dont get confused with return keyword inside onsubmit, it is there to prevent html page to reload/default behaviour, and this have nothing to do with actual file upload process but if you remove it page will reload on submit -->
+    <form onsubmit="return upload()">
+        <!-- dont get confused with return keyword inside onsubmit, it is there to prevent html page to reload/default behaviour, and this have nothing to do with actual file upload process but if you remove it page will reload on submit -->
 
-    <input required type="file" id="fileInput">
-    <!-- <button type="submit"> Upload </button> -->
-    <button onclick="upload()"> Upload </button>
-    <!-- </form> -->
+        <input required type="file" id="fileInput">
+        <button type="submit"> Upload </button>
+    </form>
 
 
     <script>
@@ -51,7 +50,7 @@
 
             let formData = new FormData();
             // https://developer.mozilla.org/en-US/docs/Web/API/FormData/append#syntax
-            
+
             formData.append("myFile", fileInput.files[0]); // file input is for browser only, use fs to read file in nodejs client
             // formData.append("myFile", blob, "myFileNameAbc"); // you can also send file in Blob form (but you really dont need to covert a File into blob since it is Actually same, Blob is just a new implementation and nothing else, and most of the time (as of january 2021) when someone function says I accept Blob it means File or Blob) see: https://stackoverflow.com/questions/33855167/convert-data-file-to-blob
             formData.append("myName", "malik"); // this is how you add some text data along with file
