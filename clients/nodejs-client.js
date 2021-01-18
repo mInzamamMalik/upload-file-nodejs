@@ -2,13 +2,18 @@
 
 const fs = require('fs')
 var FormData = require('form-data');
-const axios = require("axios").default;
-
-// file = fs.readFileSync("./photo.png");
+// const axios = require("axios").default;
 
 
 let formData = new FormData(); // https://www.npmjs.com/package/form-data
-formData.append("file", fs.createReadStream("./photo.webp")); // 
+formData.append("myFile", fs.createReadStream("./photo.webp")); // 
+formData.append("myName", "malik"); // this is how you add some text data along with file
+formData.append("myDetails",
+    JSON.stringify({
+        "subject": "Science",   // this is how you send a json object along with file, you need to stringify (ofcourse you need to parse it back to JSON on server) your json Object since append method only allows either USVString or Blob(File is subclass of blob so File is also allowed)
+        "year": "2021"
+    })
+);
 
 formData.submit("http://localhost:3000/upload", function (err, res) {
     console.log(res.statusCode);

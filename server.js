@@ -16,18 +16,18 @@ app.use(cors());
 app.post("/upload", upload.any(), (req, res, next) => {  // never use upload.single. see https://github.com/expressjs/multer/issues/799#issuecomment-586526877
 
     console.log("req.body: ", req.body);
-    // console.log("req.body: ", JSON.parse(req.body.myDetails));
+    console.log("req.body: ", JSON.parse(req.body.myDetails));
     console.log("req.files: ", req.files);
 
-    // console.log("uploaded file name: ", req.files[0].originalname);
-    // console.log("file type: ", req.files[0].mimetype);
-    // console.log("file name in server folders: ", req.files[0].filename);
-    // console.log("file path in server folders: ", req.files[0].path);
+    console.log("uploaded file name: ", req.files[0].originalname);
+    console.log("file type: ", req.files[0].mimetype);
+    console.log("file name in server folders: ", req.files[0].filename);
+    console.log("file path in server folders: ", req.files[0].path);
 
     // TODO: upload file to storage bucket 
     // you must need to upload file in a storage bucket or somewhere safe
     // server folder is not safe, since most of the time when you deploy your server
-    // on cloud it makes more than one instances, if you use server folder to save files
+    // on cloud it makes more t2han one instances, if you use server folder to save files
     // two things will happen, 
     // 1) your server will no more stateless
     // 2) providers like heroku delete all files when dyno restarts (their could be lots of reasons for your dyno to restart, or it could restart for no reason so be careful) 

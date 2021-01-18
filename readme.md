@@ -10,4 +10,4 @@ https://stackoverflow.com/questions/41610811/react-js-how-to-send-a-multipart-fo
 
 status: 
 web client => server : working
-nodejs client => server: partially working
+nodejs client => server: working
