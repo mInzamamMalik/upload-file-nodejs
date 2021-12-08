@@ -6,13 +6,15 @@ const fs = require('fs')
 
 //==============================================
 const multer = require('multer')
-const storage = multer.diskStorage({ // https://www.npmjs.com/package/multer#diskstorage
+const storageConfig = multer.diskStorage({ // https://www.npmjs.com/package/multer#diskstorage
     destination: './uploads/',
     filename: function (req, file, cb) {
-        cb(null, `${new Date().getTime()}-${file.filename}.${file.mimetype.split("/")[1]}`)
+
+        console.log("mul-file: ", file);
+        cb(null, `${new Date().getTime()}-${file.originalname}`)
     }
 })
-var upload = multer({ storage: storage })
+var upload = multer({ storage: storageConfig })
 
 //==============================================
 
@@ -44,7 +46,9 @@ const bucket = admin.storage().bucket("gs://delete-this-1329.appspot.com");
 var app = express();
 app.use(bodyParser.json()); // to parse json body
 app.use(morgan('dev'));
-app.use(cors());
+app.use(cors({
+    origin: true
+}));
 
 app.post("/upload", upload.any(), (req, res, next) => {  // never use upload.single. see https://github.com/expressjs/multer/issues/799#issuecomment-586526877
 
@@ -56,6 +60,7 @@ app.post("/upload", upload.any(), (req, res, next) => {  // never use upload.sin
     console.log("file type: ", req.files[0].mimetype);
     console.log("file name in server folders: ", req.files[0].filename);
     console.log("file path in server folders: ", req.files[0].path);
+
 
     // upload file to storage bucket 
     // you must need to upload file in a storage bucket or somewhere safe
@@ -87,6 +92,7 @@ app.post("/upload", upload.any(), (req, res, next) => {  // never use upload.sin
                         // // delete file from folder before sending response back to client (optional but recommended)
                         // // optional because it is gonna delete automatically sooner or later
                         // // recommended because you may run out of space if you dont do so, and if your files are sensitive it is simply not safe in server folder
+
                         // try {
                         //     fs.unlinkSync(req.files[0].path)
                         //     //file removed
@@ -96,7 +102,7 @@ app.post("/upload", upload.any(), (req, res, next) => {  // never use upload.sin
                         res.send("Ok");
                     }
                 })
-            }else{
+            } else {
                 console.log("err: ", err)
                 res.status(500).send();
             }

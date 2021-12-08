@@ -25,9 +25,11 @@
     <form onsubmit="return upload()">
         <!-- dont get confused with return keyword inside onsubmit, it is there to prevent html page to reload/default behaviour, and this have nothing to do with actual file upload process but if you remove it page will reload on submit -->
 
-        <input required type="file" id="fileInput">
+        <input required type="file" accept="" id="fileInput">
         <button type="submit"> Upload </button>
     </form>
+
+    <div id="img"></div>
 
 
     <script>
@@ -47,6 +49,11 @@
 
             console.log("fileInput: ", fileInput);
             console.log("fileInput: ", fileInput.files[0]);
+            
+            var url = URL.createObjectURL(fileInput.files[0])
+            console.log("url: ", url);
+
+            document.getElementById("img").innerHTML = `<img src="${url}" alt="" id="img"> `
 
             let formData = new FormData();
             // https://developer.mozilla.org/en-US/docs/Web/API/FormData/append#syntax
